@@ -2,6 +2,7 @@
 core/router.py
 Routing logic for the AI security toolkit.
 Decides which tool to call and invokes it.
+This version returns the chosen tool name together with the tool result.
 """
 
 import logging
@@ -38,38 +39,76 @@ User request:
         result = str(result)
     tool = result.lower().strip().split()[0] if result else ""
 
-    # map explicit words to tool names
-    if "vuln" in tool or "code" in tool or "scan" in user_query.lower() and "code" in user_query.lower():
+    # map explicit words and heuristics to tool names
+    lower_q = user_query.lower()
+    if "scan" in lower_q and "code" in lower_q:
         return "vuln"
-    if "config" in tool or "secret" in user_query.lower() or "policy" in user_query.lower():
+    if "code" in lower_q and ("vulnerab" in lower_q or "sql" in lower_q or "injection" in lower_q):
+        return "vuln"
+    if "config" in lower_q or "secret" in lower_q or "policy" in lower_q or "iam" in lower_q:
         return "config"
-    if "phish" in tool or "email" in user_query.lower() or "click" in user_query.lower():
+    if "phish" in tool or "email" in lower_q or "click" in lower_q:
         return "phishing"
-    if "class" in tool or "label" in user_query.lower():
+    if "class" in tool or "label" in lower_q or "confidence" in lower_q:
         return "classify"
 
-    # fallback: try to interpret the model's single-word reply
+    # fallback to the model reply if it clearly names a tool
     if tool in {"phishing", "vuln", "config", "classify"}:
         return tool
 
-    # default to phishing if uncertain
+    # default to phishing
     return "phishing"
 
 
-def route_query(user_query: str):
-    """Route the user's query to the chosen tool and return its result."""
+def route_query(user_query: str) -> dict:
+    """
+    Route the user's query to the chosen tool and return a structure:
+    { "tool": "<tool-name>", "result": <tool-output-or-error> }
+    """
     tool = choose_tool(user_query)
-    logger.info("Router selected tool: %s for query: %.60s", tool, user_query)
+    logger.info("Router selected tool: %s for query: %.120s", tool, user_query)
 
     if tool == "phishing":
-        return analyze_phishing(user_query)
+        try:
+            result = analyze_phishing(user_query)
+        except Exception as e:
+            logger.exception("Error in phishing tool: %s", e)
+            result = {"error": str(e)}
+        return {"tool": "phishing", "result": result}
+
     elif tool == "vuln":
-        return analyze_vuln(user_query)
+        try:
+            result = analyze_vuln(user_query)
+        except Exception as e:
+            logger.exception("Error in vuln tool: %s", e)
+            result = {"error": str(e)}
+        return {"tool": "vulnerability_scannner", "result": result}
+
     elif tool == "config":
-        # return analyze_config(user_query)
-        return {"error": "config tool not implemented yet"}
+        # placeholder until implemented
+        try:
+            # result = analyze_config(user_query)
+            result = {"error": "config tool not implemented yet"}
+        except Exception as e:
+            logger.exception("Error in config tool: %s", e)
+            result = {"error": str(e)}
+        return {"tool": "config", "result": result}
+
     elif tool == "classify":
-        # return analyze_classify(user_query)
-        return {"error": "classify tool not implemented yet"}
+        # placeholder until implemented
+        try:
+            # result = analyze_classify(user_query)
+            result = {"error": "classify tool not implemented yet"}
+        except Exception as e:
+            logger.exception("Error in classify tool: %s", e)
+            result = {"error": str(e)}
+        return {"tool": "classify", "result": result}
+
     else:
-        return {"error": f"No handler implemented for tool '{tool}'"}
+        logger.warning("Router returned unknown tool: %s. Defaulting to phishing.", tool)
+        try:
+            result = analyze_phishing(user_query)
+        except Exception as e:
+            logger.exception("Error in fallback phishing tool: %s", e)
+            result = {"error": str(e)}
+        return {"tool": "phishing", "result": result}
