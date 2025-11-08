@@ -2,20 +2,21 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Shield, Lock, Code, ArrowRight, Sparkles, Menu, X } from 'lucide-react';
+import { Shield, Lock, Code, ArrowRight, Sparkles } from 'lucide-react';
 
 export default function LandingPage() {
   const router = useRouter();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
-    let animationFrameId;
-    let particles = [];
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let particles: Particle[] = [];
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -26,6 +27,13 @@ export default function LandingPage() {
     window.addEventListener('resize', resizeCanvas);
 
     class Particle {
+      x: number;
+      y: number;
+      size: number;
+      speedX: number;
+      speedY: number;
+      opacity: number;
+
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
@@ -46,6 +54,7 @@ export default function LandingPage() {
       }
 
       draw() {
+        if (!ctx) return;
         ctx.fillStyle = `rgba(106, 0, 235, ${this.opacity})`;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -58,6 +67,7 @@ export default function LandingPage() {
     }
 
     const animate = () => {
+      if (!ctx) return;
       ctx.fillStyle = 'rgba(12, 7, 18, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -93,18 +103,36 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0C0712] text-white font-['Arial'] relative overflow-hidden">
+    <div className="min-h-screen bg-[#0C0712] text-white relative overflow-hidden">
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 z-0"
-        style={{ opacity: 0.6 }}
+        className="fixed inset-0 z-0"
+        style={{ opacity: 0.4 }}
       />
 
-      <style jsx>{`
+      <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Arimo:wght@400;500;600;700&display=swap');
         
-        .font-dela { font-family: 'Dela Gothic One', cursive; }
-        .font-arimo { font-family: 'Arimo', sans-serif; }
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: 'Arimo', sans-serif;
+          background: #0C0712;
+          color: #ffffff;
+          overflow-x: hidden;
+        }
+
+        .font-dela { 
+          font-family: 'Dela Gothic One', cursive; 
+        }
+        
+        .font-arimo { 
+          font-family: 'Arimo', sans-serif; 
+        }
         
         .glow-purple {
           box-shadow: 0 0 20px rgba(92, 0, 204, 0.5);
@@ -138,67 +166,64 @@ export default function LandingPage() {
         .pulse-glow {
           animation: pulse-glow 3s ease-in-out infinite;
         }
+
+        ::-webkit-scrollbar {
+          width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+          background: #0C0712;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background: linear-gradient(180deg, #5C00CC, #6A00EB);
+          border-radius: 5px;
+        }
+
+        ::selection {
+          background: #5C00CC;
+          color: white;
+        }
       `}</style>
 
       <nav className="fixed top-0 w-full z-50 bg-[#0C0712]/80 backdrop-blur-xl border-b border-[#2A252F]">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="flex items-center justify-between h-20">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 gradient-purple rounded-lg flex items-center justify-center pulse-glow">
-                <Shield className="w-6 h-6" />
-              </div>
-              <span className="text-xl font-dela">Sentra<span className="text-gradient">Sec</span></span>
+            <div className="flex items-center gap-3 cursor-pointer" onClick={() => router.push('/')}>
+              <span className="text-xl font-dela">
+                Sentra<span className="text-gradient">Sec</span>
+              </span>
             </div>
 
             <button 
               onClick={() => router.push('/dashboard')}
-              className="hidden md:block px-6 py-3 gradient-purple rounded-full font-arimo font-semibold hover:scale-105 transition-transform glow-purple"
+              className="px-6 py-3 gradient-purple rounded-full font-arimo font-semibold hover:scale-105 transition-transform glow-purple"
             >
               Get Started
             </button>
-
-            <button 
-              className="md:hidden text-white"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
           </div>
         </div>
-
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-[#201A26] border-t border-[#2A252F]">
-            <div className="px-6 py-4 space-y-3 font-arimo">
-              <button 
-                onClick={() => router.push('/dashboard')}
-                className="w-full mt-4 px-6 py-3 gradient-purple rounded-full font-semibold"
-              >
-                Get Started
-              </button>
-            </div>
-          </div>
-        )}
       </nav>
 
       <main className="relative z-10 pt-32 pb-20 px-6 lg:px-12">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center space-y-8 mb-20">
-            <div className="inline-flex items-center gap-2 px-5 py-2 bg-[#2A252F] border border-[#5C00CC]/30 rounded-full float-animation">
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-2 px-5 py-2 bg-[#2A252F] border border-[#5C00CC]/30 rounded-full mb-8 float-animation">
               <Sparkles className="w-4 h-4 text-[#6A00EB]" />
               <span className="text-sm font-arimo text-[#A8A5AB]">AI-Powered Security Platform</span>
             </div>
             
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-dela leading-tight">
-              <span className="block text-white">Elevate Your</span>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-dela leading-tight mb-8">
+              <span className="block text-white mb-2">Elevate Your</span>
               <span className="block text-gradient">Cyber Defense</span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-[#A8A5AB] font-arimo max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-[#A8A5AB] font-arimo max-w-3xl mx-auto leading-relaxed mb-12">
               Advanced threat detection powered by Gemini AI. Analyze phishing attempts, 
               code vulnerabilities, and configuration risks with military-grade precision.
             </p>
 
-            <div className="flex gap-6 justify-center pt-8 flex-col md:flex-row items-center">
+            <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
               <button 
                 onClick={() => router.push('/dashboard')}
                 className="inline-flex items-center gap-3 px-10 py-5 gradient-purple rounded-2xl text-lg font-arimo font-bold hover:scale-105 transition-all duration-300 glow-purple group"
@@ -254,9 +279,7 @@ export default function LandingPage() {
             <div className="inline-block p-1 bg-gradient-to-r from-[#5C00CC] to-[#6A00EB] rounded-3xl">
               <div className="bg-[#0C0712] px-12 py-8 rounded-3xl">
                 <p className="text-sm font-arimo text-[#A8A5AB] mb-2">Trusted by Security Teams</p>
-                <p className="text-4xl font-dela text-gradient">
-                  99.8% Accuracy
-                </p>
+                <p className="text-4xl font-dela text-gradient">99.8% Accuracy</p>
               </div>
             </div>
           </div>
