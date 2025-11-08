@@ -1,147 +1,267 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Shield, Lock, Code, FileText, ArrowRight, Sparkles } from 'lucide-react';
+import { Shield, Lock, Code, ArrowRight, Sparkles, Menu, X } from 'lucide-react';
 
 export default function LandingPage() {
   const router = useRouter();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
+    let particles = [];
+
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = Math.random() * 0.5 - 0.25;
+        this.speedY = Math.random() * 0.5 - 0.25;
+        this.opacity = Math.random() * 0.5 + 0.2;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x > canvas.width) this.x = 0;
+        if (this.x < 0) this.x = canvas.width;
+        if (this.y > canvas.height) this.y = 0;
+        if (this.y < 0) this.y = canvas.height;
+      }
+
+      draw() {
+        ctx.fillStyle = `rgba(106, 0, 235, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 100; i++) {
+      particles.push(new Particle());
+    }
+
+    const animate = () => {
+      ctx.fillStyle = 'rgba(12, 7, 18, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach((particle, index) => {
+        particle.update();
+        particle.draw();
+
+        for (let j = index + 1; j < particles.length; j++) {
+          const dx = particles[j].x - particle.x;
+          const dy = particles[j].y - particle.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 150) {
+            ctx.strokeStyle = `rgba(92, 0, 204, ${0.2 * (1 - distance / 150)})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(particle.x, particle.y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      });
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0C0712] via-[#201A26] to-[#0C0712] text-white overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-[#5C00CC] opacity-20 blur-[120px] rounded-full animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#6A00EB] opacity-20 blur-[120px] rounded-full animate-pulse delay-700"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-[#5C00CC]/10 to-transparent rounded-full"></div>
-      </div>
+    <div className="min-h-screen bg-[#0C0712] text-white font-['Arial'] relative overflow-hidden">
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 z-0"
+        style={{ opacity: 0.6 }}
+      />
 
-      <nav className="relative z-50 border-b border-[#2A252F]">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-[#5C00CC] to-[#6A00EB] blur-lg opacity-50"></div>
-              <div className="relative w-12 h-12 bg-gradient-to-br from-[#5C00CC] to-[#6A00EB] rounded-xl flex items-center justify-center">
-                <Shield className="w-7 h-7 text-white" />
+      <style jsx>{`
+        @import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Arimo:wght@400;500;600;700&display=swap');
+        
+        .font-dela { font-family: 'Dela Gothic One', cursive; }
+        .font-arimo { font-family: 'Arimo', sans-serif; }
+        
+        .glow-purple {
+          box-shadow: 0 0 20px rgba(92, 0, 204, 0.5);
+        }
+        
+        .gradient-purple {
+          background: linear-gradient(135deg, #5C00CC 0%, #6A00EB 100%);
+        }
+        
+        .text-gradient {
+          background: linear-gradient(135deg, #5C00CC 0%, #6A00EB 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-20px); }
+        }
+
+        .float-animation {
+          animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+          0%, 100% { box-shadow: 0 0 20px rgba(92, 0, 204, 0.5); }
+          50% { box-shadow: 0 0 40px rgba(106, 0, 235, 0.8); }
+        }
+
+        .pulse-glow {
+          animation: pulse-glow 3s ease-in-out infinite;
+        }
+      `}</style>
+
+      <nav className="fixed top-0 w-full z-50 bg-[#0C0712]/80 backdrop-blur-xl border-b border-[#2A252F]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="flex items-center justify-between h-20">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 gradient-purple rounded-lg flex items-center justify-center pulse-glow">
+                <Shield className="w-6 h-6" />
               </div>
+              <span className="text-xl font-dela">Sentra<span className="text-gradient">Sec</span></span>
             </div>
-            <span className="text-2xl font-['Dela_Gothic_One'] bg-gradient-to-r from-[#5C00CC] via-[#6A00EB] to-[#5C00CC] bg-clip-text text-transparent">
-              SentraSec
-            </span>
-          </div>
-          <button 
-            onClick={() => router.push('/dashboard')}
-            className="group relative px-8 py-3 bg-gradient-to-r from-[#5C00CC] to-[#6A00EB] rounded-xl font-['Arimo'] font-semibold overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(92,0,204,0.5)]"
-          >
-            <span className="relative z-10 flex items-center gap-2">
-              Get Started
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-[#6A00EB] to-[#5C00CC] opacity-0 group-hover:opacity-100 transition-opacity"></div>
-          </button>
-        </div>
-      </nav>
 
-      <main className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20">
-        <div className="text-center space-y-8 mb-20">
-          <div className="inline-flex items-center gap-2 px-5 py-2 bg-[#2A252F] border border-[#5C00CC]/30 rounded-full">
-            <Sparkles className="w-4 h-4 text-[#6A00EB]" />
-            <span className="text-sm font-['Arimo'] text-[#A8A5AB]">AI-Powered Security Platform</span>
-          </div>
-          
-          <h1 className="text-7xl font-['Dela_Gothic_One'] leading-tight">
-            <span className="block text-white">Elevate Your</span>
-            <span className="block bg-gradient-to-r from-[#5C00CC] via-[#6A00EB] to-[#5C00CC] bg-clip-text text-transparent">
-              Cyber Defense
-            </span>
-          </h1>
-          
-          <p className="text-xl font-['Arimo'] text-[#A8A5AB] max-w-3xl mx-auto leading-relaxed">
-            Advanced threat detection powered by Gemini AI. Analyze phishing attempts, 
-            code vulnerabilities, and configuration risks with military-grade precision.
-          </p>
-
-          <div className="flex gap-6 justify-center pt-8">
             <button 
               onClick={() => router.push('/dashboard')}
-              className="group relative px-10 py-5 bg-gradient-to-r from-[#5C00CC] to-[#6A00EB] rounded-2xl font-['Arimo'] font-bold text-lg overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(106,0,235,0.6)] hover:scale-105"
+              className="hidden md:block px-6 py-3 gradient-purple rounded-full font-arimo font-semibold hover:scale-105 transition-transform glow-purple"
             >
-              <span className="relative z-10 flex items-center gap-3">
-                Start Scanning
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-              </span>
+              Get Started
             </button>
-            
+
             <button 
-              onClick={() => router.push('/about')}
-              className="px-10 py-5 bg-[#2A252F] border-2 border-[#5C00CC]/50 rounded-2xl font-['Arimo'] font-bold text-lg hover:border-[#6A00EB] hover:bg-[#2A252F]/80 transition-all duration-300"
+              className="md:hidden text-white"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              Learn More
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {[
-            { 
-              icon: Shield, 
-              title: 'Phishing Detection', 
-              desc: 'AI-powered analysis of suspicious URLs and text',
-              gradient: 'from-[#5C00CC] to-[#6A00EB]'
-            },
-            { 
-              icon: Code, 
-              title: 'Code Scanner', 
-              desc: 'Deep vulnerability analysis across all languages',
-              gradient: 'from-[#6A00EB] to-[#5C00CC]'
-            },
-            { 
-              icon: Lock, 
-              title: 'Config Analyzer', 
-              desc: 'Security risk assessment for configurations',
-              gradient: 'from-[#5C00CC] to-[#6A00EB]'
-            }
-          ].map((feature, i) => (
-            <div
-              key={i}
-              className="group relative p-8 bg-[#2A252F]/50 backdrop-blur-xl border border-[#5C00CC]/20 rounded-3xl hover:border-[#6A00EB] transition-all duration-500 hover:shadow-[0_0_40px_rgba(106,0,235,0.2)] hover:-translate-y-2"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-[#5C00CC]/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              <div className="relative z-10">
-                <div className={`w-16 h-16 bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                  <feature.icon className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-['Dela_Gothic_One'] text-white mb-3">{feature.title}</h3>
-                <p className="font-['Arimo'] text-[#A8A5AB] leading-relaxed">{feature.desc}</p>
-              </div>
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-[#201A26] border-t border-[#2A252F]">
+            <div className="px-6 py-4 space-y-3 font-arimo">
+              <button 
+                onClick={() => router.push('/dashboard')}
+                className="w-full mt-4 px-6 py-3 gradient-purple rounded-full font-semibold"
+              >
+                Get Started
+              </button>
             </div>
-          ))}
-        </div>
+          </div>
+        )}
+      </nav>
 
-        <div className="mt-32 text-center">
-          <div className="inline-block p-1 bg-gradient-to-r from-[#5C00CC] to-[#6A00EB] rounded-3xl">
-            <div className="bg-[#0C0712] px-12 py-8 rounded-3xl">
-              <p className="text-sm font-['Arimo'] text-[#A8A5AB] mb-2">Trusted by Security Teams</p>
-              <p className="text-4xl font-['Dela_Gothic_One'] bg-gradient-to-r from-[#5C00CC] to-[#6A00EB] bg-clip-text text-transparent">
-                99.8% Accuracy
-              </p>
+      <main className="relative z-10 pt-32 pb-20 px-6 lg:px-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center space-y-8 mb-20">
+            <div className="inline-flex items-center gap-2 px-5 py-2 bg-[#2A252F] border border-[#5C00CC]/30 rounded-full float-animation">
+              <Sparkles className="w-4 h-4 text-[#6A00EB]" />
+              <span className="text-sm font-arimo text-[#A8A5AB]">AI-Powered Security Platform</span>
+            </div>
+            
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-dela leading-tight">
+              <span className="block text-white">Elevate Your</span>
+              <span className="block text-gradient">Cyber Defense</span>
+            </h1>
+            
+            <p className="text-xl md:text-2xl text-[#A8A5AB] font-arimo max-w-3xl mx-auto leading-relaxed">
+              Advanced threat detection powered by Gemini AI. Analyze phishing attempts, 
+              code vulnerabilities, and configuration risks with military-grade precision.
+            </p>
+
+            <div className="flex gap-6 justify-center pt-8 flex-col md:flex-row items-center">
+              <button 
+                onClick={() => router.push('/dashboard')}
+                className="inline-flex items-center gap-3 px-10 py-5 gradient-purple rounded-2xl text-lg font-arimo font-bold hover:scale-105 transition-all duration-300 glow-purple group"
+              >
+                Start Scanning
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+              </button>
+              
+              <button 
+                onClick={() => router.push('/about')}
+                className="px-10 py-5 bg-[#2A252F] border-2 border-[#5C00CC]/50 rounded-2xl font-arimo font-bold text-lg hover:border-[#6A00EB] hover:bg-[#2A252F]/80 transition-all duration-300"
+              >
+                Learn More
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-20">
+            {[
+              { 
+                icon: Shield, 
+                title: 'Phishing Detection', 
+                desc: 'AI-powered analysis of suspicious URLs and text',
+                gradient: 'from-[#5C00CC] to-[#6A00EB]'
+              },
+              { 
+                icon: Code, 
+                title: 'Code Scanner', 
+                desc: 'Deep vulnerability analysis across all languages',
+                gradient: 'from-[#6A00EB] to-[#5C00CC]'
+              },
+              { 
+                icon: Lock, 
+                title: 'Config Analyzer', 
+                desc: 'Security risk assessment for configurations',
+                gradient: 'from-[#5C00CC] to-[#6A00EB]'
+              }
+            ].map((feature, i) => (
+              <div
+                key={i}
+                className="p-6 bg-gradient-to-br from-[#201A26] to-[#2A252F] rounded-2xl border border-[#2A252F] hover:border-[#6A00EB] transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              >
+                <div className={`w-12 h-12 bg-gradient-to-br ${feature.gradient} rounded-xl flex items-center justify-center mb-4 glow-purple`}>
+                  <feature.icon className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-dela mb-2 text-white">{feature.title}</h3>
+                <p className="text-[#A8A5AB] font-arimo">{feature.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <div className="inline-block p-1 bg-gradient-to-r from-[#5C00CC] to-[#6A00EB] rounded-3xl">
+              <div className="bg-[#0C0712] px-12 py-8 rounded-3xl">
+                <p className="text-sm font-arimo text-[#A8A5AB] mb-2">Trusted by Security Teams</p>
+                <p className="text-4xl font-dela text-gradient">
+                  99.8% Accuracy
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </main>
-
-      <style jsx>{`
-        @keyframes pulse {
-          0%, 100% { transform: scale(1); opacity: 0.2; }
-          50% { transform: scale(1.1); opacity: 0.3; }
-        }
-        .animate-pulse {
-          animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        .delay-700 {
-          animation-delay: 0.7s;
-        }
-      `}</style>
     </div>
   );
 }
