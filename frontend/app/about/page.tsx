@@ -38,12 +38,6 @@ export default function AboutPage() {
       <nav style={styles.nav}>
         <div style={styles.navContent}>
           <div style={styles.logo} onClick={() => router.push('/')}>
-            <div style={styles.logoIconWrapper}>
-              <div style={styles.logoIconGlow} />
-              <div style={styles.logoIcon}>
-                <Shield style={{ width: '28px', height: '28px', color: 'white' }} />
-              </div>
-            </div>
             <span style={styles.logoText}>
               Sentra<span style={styles.logoGradient}>Sec</span>
             </span>
@@ -214,8 +208,9 @@ const styles: { [key: string]: React.CSSProperties } = {
     justifyContent: 'center',
   },
   logoText: {
-    fontSize: '24px',
-    fontFamily: '"Dela Gothic One", cursive',
+    fontSize: '28px',
+    fontFamily: '"Fredericka the Great", serif',
+    fontWeight: 'bold'
   },
   logoGradient: {
     background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
@@ -250,7 +245,8 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   title: {
     fontSize: '72px',
-    fontFamily: '"Dela Gothic One", cursive',
+    fontFamily:'"Fredericka the Great", serif',
+    fontweight: 'bold',
     marginBottom: '24px',
     display: 'flex',
     flexDirection: 'column',

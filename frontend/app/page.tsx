@@ -281,9 +281,9 @@ const styles: { [key: string]: React.CSSProperties } = {
     cursor: 'pointer',
   },
   logoText: {
-    fontSize: '24px',
-    fontFamily: '"Dela Gothic One", cursive',
-    fontWeight: 'bold',
+    fontSize: '28px',
+    fontFamily: '"Fredericka the Great", serif',
+    fontWeight: 'bold'
   },
   logoGradient: {
     background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
@@ -339,7 +339,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   title: {
     fontSize: '80px',
-    fontFamily: '"Dela Gothic One", cursive',
+    fontFamily:'"Fredericka the Great", serif',
     lineHeight: '1.2',
     marginBottom: '32px',
     display: 'flex',

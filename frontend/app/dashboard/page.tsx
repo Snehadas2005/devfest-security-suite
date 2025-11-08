@@ -76,6 +76,7 @@ export default function Dashboard() {
           <div style={styles.logo} onClick={() => router.push('/')}>
             <div style={styles.logoIconWrapper}>
               <div style={styles.logoIconGlow} />
+
             </div>
             <span style={styles.logoText}>
               Sentra<span style={styles.logoGradient}>Sec</span>
@@ -316,8 +317,9 @@ const styles: { [key: string]: React.CSSProperties } = {
     justifyContent: 'center',
   },
   logoText: {
-    fontSize: '24px',
-    fontFamily: '"Dela Gothic One", cursive',
+    fontSize: '28px',
+    fontFamily: '"Fredericka the Great", serif',
+    fontWeight: 'bold'
   },
   logoGradient: {
     background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
@@ -361,7 +363,8 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   title: {
     fontSize: '60px',
-    fontFamily: '"Dela Gothic One", cursive',
+    fontFamily:'"Fredericka the Great", serif',
+    fontweight: 'bold',
     color: 'white',
     marginBottom: '12px',
   },
