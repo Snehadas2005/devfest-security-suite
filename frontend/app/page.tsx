@@ -34,7 +34,6 @@ export default function TestStoragePage() {
     setUploading(true);
     setMessage("");
 
-    // get Firebase token
     const token = await user.getIdToken();
 
     const formData = new FormData();
@@ -48,8 +47,8 @@ export default function TestStoragePage() {
       });
 
       const data = await res.json();
-      if (res.ok) setMessage(`✅ Uploaded to: ${data.path}`);
-      else setMessage(`❌ Upload failed: ${data.error}`);
+      if (res.ok) setMessage(`Uploaded to: ${data.path}`);
+      else setMessage(`Upload failed: ${data.error}`);
     } catch (err) {
       console.error(err);
       setMessage("Upload failed (network error).");
