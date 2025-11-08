@@ -1,8 +1,6 @@
-"use client";
-
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { FileText, Code, Settings, Search, Activity, CheckCircle, AlertTriangle, Shield, User, XCircle, ChevronRight } from 'lucide-react';
+import { FileText, Code, Settings, Search, Activity, CheckCircle, AlertTriangle, Shield, User, XCircle, Upload, ChevronRight } from 'lucide-react';
 
 const mockJobs = [
   { id: '1', type: 'text', status: 'safe', confidence: 95, timestamp: '2 hours ago' },
@@ -271,6 +269,11 @@ export default function Dashboard() {
           from { opacity: 0; transform: scale(0.95); }
           to { opacity: 1; transform: scale(1); }
         }
+        @keyframes float {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(30px, -30px) scale(1.1); }
+          66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
         
         @keyframes float {
           0%, 100% { transform: translate(0, 0) scale(1); }
@@ -286,18 +289,12 @@ export default function Dashboard() {
         .animate-fade-in {
           animation: fade-in 0.3s ease-out;
         }
-        
         .animate-float {
           animation: float 20s ease-in-out infinite;
         }
-        
         .animate-float-delayed {
           animation: float 20s ease-in-out infinite;
           animation-delay: -10s;
-        }
-        
-        .animate-spin {
-          animation: spin 1s linear infinite;
         }
       `}</style>
     </div>

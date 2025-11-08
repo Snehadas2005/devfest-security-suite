@@ -130,145 +130,16 @@ export default function LandingPage() {
         </div>
       </main>
 
-      <style jsx global>{`
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-        
-        body {
-          background: #0C0712;
-          color: #ffffff;
-          font-family: 'Arial', sans-serif;
-          overflow-x: hidden;
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-          font-family: 'Dela Gothic One', cursive;
-        }
-
-        p, span, button, input, textarea {
-          font-family: 'Arimo', sans-serif;
-        }
-
-        ::-webkit-scrollbar {
-          width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-          background: #0C0712;
-        }
-
-        ::-webkit-scrollbar-thumb {
-          background: linear-gradient(180deg, #5C00CC, #6A00EB);
-          border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(180deg, #6A00EB, #5C00CC);
-        }
-
-        ::selection {
-          background: #5C00CC;
-          color: white;
-        }
-
-        button {
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-
-        button:active {
-          transform: scale(0.98);
-        }
-
-        input:focus, textarea:focus {
-          outline: none;
-        }
-
-        .bg-gradient-radial {
-          background: radial-gradient(circle, rgba(92, 0, 204, 0.1) 0%, transparent 70%);
-        }
-
+      <style jsx>{`
         @keyframes pulse {
-          0%, 100% { 
-            transform: scale(1); 
-            opacity: 0.2; 
-          }
-          50% { 
-            transform: scale(1.1); 
-            opacity: 0.3; 
-          }
+          0%, 100% { transform: scale(1); opacity: 0.2; }
+          50% { transform: scale(1.1); opacity: 0.3; }
         }
-        
         .animate-pulse {
           animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
-        
         .delay-700 {
           animation-delay: 0.7s;
-        }
-
-        @media (max-width: 768px) {
-          h1 {
-            font-size: 2.5rem;
-          }
-          
-          h2 {
-            font-size: 2rem;
-          }
-
-          .text-7xl {
-            font-size: 3rem;
-          }
-
-          .text-xl {
-            font-size: 1.125rem;
-          }
-
-          .grid-cols-1 {
-            grid-template-columns: 1fr;
-          }
-
-          .flex {
-            flex-direction: column;
-            width: 100%;
-          }
-
-          .flex button {
-            width: 100%;
-          }
-        }
-
-        @media (max-width: 640px) {
-          .px-6 {
-            padding-left: 1rem;
-            padding-right: 1rem;
-          }
-
-          .py-5 {
-            padding-top: 0.75rem;
-            padding-bottom: 0.75rem;
-          }
-
-          .pt-32 {
-            padding-top: 4rem;
-          }
-
-          .text-2xl {
-            font-size: 1.25rem;
-          }
-
-          .gap-6 {
-            gap: 1rem;
-          }
-
-          .gap-8 {
-            gap: 1.5rem;
-          }
         }
       `}</style>
     </div>
