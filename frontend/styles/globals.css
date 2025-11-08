@@ -1,97 +1,13 @@
-/* /frontend/src/styles/globals.css */
-
-/* 1. FONT IMPORT (Must be at the very top) */
 @import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Arimo:wght@400;500;600;700&display=swap');
 
-/* 2. TAILWIND DIRECTIVES (Must be after imports) */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* 3. CUSTOM CSS/VARIABLES (Non-conflicting global definitions) */
-
-:root {
-  /* Using standard Tailwind color naming convention is also a good practice, 
-     but keeping your existing variables for now: */
-  --background: #0C0712;
-  --foreground: #ffffff;
-  --primary: #5C00CC;
-  --secondary: #6A00EB;
-  --dark: #201A26;
-  --darker: #0C0712;
-  --gray: #A8A5AB;
-  --accent: #2A252F;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Scrollbar Styles */
-::-webkit-scrollbar {
-  width: 10px;
+body {
+  font-family: 'Arimo', sans-serif;
+  background: #0C0712;
+  color: #ffffff;
 }
-
-::-webkit-scrollbar-track {
-  background: var(--darker);
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--primary), var(--secondary));
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--secondary), var(--primary));
-}
-
-/* Custom Selection Style */
-::selection {
-  background: var(--primary);
-  color: white;
-}
-
-/* Base element interactions (optional, but keep) */
-input:focus, textarea:focus {
-  outline: none;
-}
-
-button {
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-button:active {
-  transform: scale(0.98);
-}
-
-.transition-smooth {
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Custom Component/Animation Classes (Keep) */
-
-.glass-morphism {
-  background: rgba(42, 37, 47, 0.5);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(92, 0, 204, 0.2);
-}
-
-.gradient-text {
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-/* ... all other custom animation keyframes and glow classes (pulse-glow, float-3d, etc.) ... */
-/* You had duplicated them, ensure only one copy of each remains */
-
-/* Example: Keep one set of keyframes */
-@keyframes pulse-glow {
-    0%, 100% {
-        opacity: 0.2;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 0.3;
-        transform: scale(1.1);
-    }
-}
-/* ... (Keep all your other animation/glow CSS blocks) ... */

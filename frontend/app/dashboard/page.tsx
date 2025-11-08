@@ -21,28 +21,28 @@ export default function Dashboard() {
       icon: FileText, 
       title: 'Phishing Detector', 
       desc: 'Scan text and URLs for phishing attempts',
-      gradient: 'from-[#5C00CC] to-[#6A00EB]'
+      gradient: 'linear-gradient(135deg, #5C00CC, #6A00EB)'
     },
     { 
       id: 'code', 
       icon: Code, 
       title: 'Code Scanner', 
       desc: 'Detect vulnerabilities in your codebase',
-      gradient: 'from-[#6A00EB] to-[#5C00CC]'
+      gradient: 'linear-gradient(135deg, #6A00EB, #5C00CC)'
     },
     { 
       id: 'config', 
       icon: Settings, 
       title: 'Config Analyzer', 
       desc: 'Analyze configuration security risks',
-      gradient: 'from-[#5C00CC] to-[#6A00EB]'
+      gradient: 'linear-gradient(135deg, #5C00CC, #6A00EB)'
     },
     { 
       id: 'classify', 
       icon: Search, 
       title: 'Risk Classifier', 
       desc: 'AI-powered risk level classification',
-      gradient: 'from-[#6A00EB] to-[#5C00CC]'
+      gradient: 'linear-gradient(135deg, #6A00EB, #5C00CC)'
     }
   ];
 
@@ -67,96 +67,103 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0C0712] via-[#201A26] to-[#0C0712] text-white">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-20 w-[500px] h-[500px] bg-[#5C00CC] opacity-10 blur-[150px] rounded-full animate-float"></div>
-        <div className="absolute bottom-20 left-20 w-[500px] h-[500px] bg-[#6A00EB] opacity-10 blur-[150px] rounded-full animate-float-delayed"></div>
-      </div>
+    <div style={styles.container}>
+      <div style={styles.bgGlow1} />
+      <div style={styles.bgGlow2} />
 
-      <nav className="relative z-50 border-b border-[#2A252F] backdrop-blur-xl bg-[#0C0712]/80">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => router.push('/')}>
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-[#5C00CC] to-[#6A00EB] blur-lg opacity-50"></div>
-              <div className="relative w-12 h-12 bg-gradient-to-br from-[#5C00CC] to-[#6A00EB] rounded-xl flex items-center justify-center">
-                <Shield className="w-7 h-7 text-white" />
-              </div>
+      <nav style={styles.nav}>
+        <div style={styles.navContent}>
+          <div style={styles.logo} onClick={() => router.push('/')}>
+            <div style={styles.logoIconWrapper}>
+              <div style={styles.logoIconGlow} />
             </div>
-            <span className="text-2xl font-['Dela_Gothic_One'] bg-gradient-to-r from-[#5C00CC] to-[#6A00EB] bg-clip-text text-transparent">
-              SentraSec
+            <span style={styles.logoText}>
+              Sentra<span style={styles.logoGradient}>Sec</span>
             </span>
           </div>
-          <div className="relative group cursor-pointer">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#5C00CC] to-[#6A00EB] blur-md opacity-0 group-hover:opacity-50 transition-opacity rounded-full"></div>
-            <div className="relative w-11 h-11 bg-gradient-to-br from-[#5C00CC] to-[#6A00EB] rounded-full flex items-center justify-center">
-              <User className="w-6 h-6 text-white" />
+          <div style={styles.userIcon}>
+            <div style={styles.userIconGlow} />
+            <div style={styles.userIconInner}>
+              <User style={{ width: '24px', height: '24px', color: 'white' }} />
             </div>
           </div>
         </div>
       </nav>
 
-      <div className="relative z-10 pt-20 max-w-7xl mx-auto px-6 py-10">
-        <div className="mb-12">
-          <h1 className="text-5xl font-['Dela_Gothic_One'] text-white mb-3">Security Dashboard</h1>
-          <p className="text-lg font-['Arimo'] text-[#A8A5AB]">Choose a tool to start analyzing your assets</p>
+      <div style={styles.main}>
+        <div style={styles.header}>
+          <h1 style={styles.title}>Security Dashboard</h1>
+          <p style={styles.subtitle}>Choose a tool to start analyzing your assets</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+        <div style={styles.toolsGrid}>
           {tools.map((tool) => (
             <div
               key={tool.id}
               onClick={() => setActiveScan(tool.id)}
-              className="group relative p-8 bg-[#2A252F]/50 backdrop-blur-xl border border-[#5C00CC]/20 rounded-3xl cursor-pointer transition-all duration-500 hover:border-[#6A00EB] hover:shadow-[0_0_50px_rgba(106,0,235,0.3)] hover:-translate-y-2"
+              style={styles.toolCard}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = '#6A00EB';
+                e.currentTarget.style.transform = 'translateY(-8px)';
+                e.currentTarget.style.boxShadow = '0 0 50px rgba(106, 0, 235, 0.3)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(92, 0, 204, 0.2)';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-[#5C00CC]/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div style={styles.toolCardBg} />
               
-              <div className="relative z-10">
-                <div className="flex items-start justify-between mb-5">
-                  <div className={`w-16 h-16 bg-gradient-to-br ${tool.gradient} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                    <tool.icon className="w-8 h-8 text-white" />
+              <div style={styles.toolCardContent}>
+                <div style={styles.toolCardTop}>
+                  <div style={{...styles.toolIcon, background: tool.gradient}}>
+                    <tool.icon style={{ width: '32px', height: '32px', color: 'white' }} />
                   </div>
-                  <ChevronRight className="w-7 h-7 text-[#A8A5AB] group-hover:text-[#6A00EB] group-hover:translate-x-1 transition-all" />
+                  <ChevronRight style={styles.toolChevron} />
                 </div>
-                <h3 className="text-2xl font-['Dela_Gothic_One'] text-white mb-3">{tool.title}</h3>
-                <p className="font-['Arimo'] text-[#A8A5AB]">{tool.desc}</p>
+                <h3 style={styles.toolTitle}>{tool.title}</h3>
+                <p style={styles.toolDesc}>{tool.desc}</p>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="bg-[#2A252F]/50 backdrop-blur-xl border border-[#5C00CC]/20 rounded-3xl p-8">
-          <h2 className="text-2xl font-['Dela_Gothic_One'] text-white flex items-center gap-3 mb-8">
-            <Activity className="w-7 h-7 text-[#6A00EB]" />
+        <div style={styles.recentScans}>
+          <h2 style={styles.recentTitle}>
+            <Activity style={{ width: '28px', height: '28px', color: '#6A00EB' }} />
             Recent Scans
           </h2>
           
-          <div className="space-y-4">
+          <div style={styles.scansList}>
             {mockJobs.map((job) => (
               <div 
                 key={job.id} 
-                className="group p-6 bg-[#201A26] border border-[#2A252F] rounded-2xl hover:border-[#5C00CC] cursor-pointer transition-all duration-300 hover:shadow-[0_0_30px_rgba(92,0,204,0.2)]"
+                style={styles.scanCard}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#5C00CC';
+                  e.currentTarget.style.boxShadow = '0 0 30px rgba(92, 0, 204, 0.2)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = '#2A252F';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-5">
-                    {job.status === 'safe' ? (
-                      <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
-                        <CheckCircle className="w-7 h-7 text-green-400" />
-                      </div>
-                    ) : (
-                      <div className="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center">
-                        <AlertTriangle className="w-7 h-7 text-yellow-400" />
-                      </div>
-                    )}
+                <div style={styles.scanCardContent}>
+                  <div style={styles.scanCardLeft}>
+                    <div style={job.status === 'safe' ? styles.scanIconSafe : styles.scanIconWarning}>
+                      {job.status === 'safe' ? (
+                        <CheckCircle style={{ width: '28px', height: '28px', color: '#4ade80' }} />
+                      ) : (
+                        <AlertTriangle style={{ width: '28px', height: '28px', color: '#facc15' }} />
+                      )}
+                    </div>
                     <div>
-                      <p className="font-['Arimo'] font-bold text-white text-lg capitalize">{job.type} Scan</p>
-                      <p className="font-['Arimo'] text-sm text-[#A8A5AB]">{job.timestamp}</p>
+                      <p style={styles.scanType}>{job.type} Scan</p>
+                      <p style={styles.scanTime}>{job.timestamp}</p>
                     </div>
                   </div>
-                  <div className={`px-5 py-2 rounded-xl font-['Arimo'] font-semibold ${
-                    job.status === 'safe' 
-                      ? 'bg-green-500/20 text-green-400' 
-                      : 'bg-yellow-500/20 text-yellow-400'
-                  }`}>
+                  <div style={job.status === 'safe' ? styles.confidenceBadgeSafe : styles.confidenceBadgeWarning}>
                     {job.confidence}% Confidence
                   </div>
                 </div>
@@ -167,139 +174,440 @@ export default function Dashboard() {
       </div>
 
       {activeScan && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fade-in">
-          <div className="relative bg-[#201A26] border border-[#5C00CC]/30 rounded-3xl shadow-[0_0_60px_rgba(106,0,235,0.3)] max-w-3xl w-full max-h-[90vh] overflow-hidden">
-            <div className="p-8 border-b border-[#2A252F]">
-              <div className="flex items-center justify-between">
-                <h2 className="text-3xl font-['Dela_Gothic_One'] text-white">
-                  {tools.find(t => t.id === activeScan)?.title}
-                </h2>
-                <button 
-                  onClick={() => setActiveScan(null)}
-                  className="w-10 h-10 rounded-xl bg-[#2A252F] hover:bg-[#5C00CC]/20 flex items-center justify-center transition-colors"
-                >
-                  <XCircle className="w-6 h-6 text-[#A8A5AB]" />
-                </button>
-              </div>
+        <div style={styles.modal}>
+          <div style={styles.modalContent}>
+            <div style={styles.modalHeader}>
+              <h2 style={styles.modalTitle}>
+                {tools.find(t => t.id === activeScan)?.title}
+              </h2>
+              <button 
+                onClick={() => setActiveScan(null)}
+                style={styles.closeButton}
+                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(92, 0, 204, 0.2)'}
+                onMouseLeave={(e) => e.currentTarget.style.background = '#2A252F'}
+              >
+                <XCircle style={{ width: '24px', height: '24px', color: '#A8A5AB' }} />
+              </button>
             </div>
             
-            <div className="p-8 space-y-6">
+            <div style={styles.modalBody}>
               <textarea
                 value={scanInput}
                 onChange={(e) => setScanInput(e.target.value)}
                 placeholder={getPlaceholder(activeScan)}
-                className="w-full h-80 p-5 bg-[#0C0712] border-2 border-[#2A252F] rounded-2xl focus:border-[#6A00EB] focus:outline-none resize-none font-mono text-sm text-white placeholder:text-[#A8A5AB] transition-colors"
+                style={styles.textarea}
               />
               
               <button
                 onClick={handleScan}
                 disabled={!scanInput || isScanning}
-                className="w-full py-5 bg-gradient-to-r from-[#5C00CC] to-[#6A00EB] rounded-2xl font-['Arimo'] font-bold text-lg hover:shadow-[0_0_40px_rgba(106,0,235,0.5)] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-3"
+                style={{
+                  ...styles.scanButton,
+                  opacity: !scanInput || isScanning ? 0.5 : 1,
+                  cursor: !scanInput || isScanning ? 'not-allowed' : 'pointer',
+                }}
+                onMouseEnter={(e) => {
+                  if (!(!scanInput || isScanning)) {
+                    e.currentTarget.style.boxShadow = '0 0 40px rgba(106, 0, 235, 0.5)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
               >
                 {isScanning ? (
                   <>
-                    <div className="w-6 h-6 border-3 border-white border-t-transparent rounded-full animate-spin" />
+                    <div style={styles.spinner} />
                     Scanning...
                   </>
                 ) : (
                   <>
-                    <Shield className="w-6 h-6" />
+                    <Shield style={{ width: '24px', height: '24px' }} />
                     Start Scan
                   </>
                 )}
               </button>
 
-              <p className="text-sm font-['Arimo'] text-[#A8A5AB] text-center">
+              <p style={styles.modalNote}>
                 Note: Backend integration pending. Results will be shown once API is connected.
               </p>
             </div>
           </div>
         </div>
       )}
-
-      <style jsx global>{`
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-        
-        body {
-          background: #0C0712;
-          color: #ffffff;
-          overflow-x: hidden;
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-        }
-
-        ::-webkit-scrollbar {
-          width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-          background: #0C0712;
-        }
-
-        ::-webkit-scrollbar-thumb {
-          background: linear-gradient(180deg, #5C00CC, #6A00EB);
-          border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(180deg, #6A00EB, #5C00CC);
-        }
-
-        ::selection {
-          background: #5C00CC;
-          color: white;
-        }
-
-        button {
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-
-        button:active {
-          transform: scale(0.98);
-        }
-
-        input:focus, textarea:focus {
-          outline: none;
-        }
-
-        @keyframes fade-in {
-          from { opacity: 0; transform: scale(0.95); }
-          to { opacity: 1; transform: scale(1); }
-        }
-        
-        @keyframes float {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(30px, -30px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
-        }
-        
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        
-        .animate-fade-in {
-          animation: fade-in 0.3s ease-out;
-        }
-        
-        .animate-float {
-          animation: float 20s ease-in-out infinite;
-        }
-        
-        .animate-float-delayed {
-          animation: float 20s ease-in-out infinite;
-          animation-delay: -10s;
-        }
-        
-        .animate-spin {
-          animation: spin 1s linear infinite;
-        }
-      `}</style>
     </div>
   );
 }
+
+const styles: { [key: string]: React.CSSProperties } = {
+  container: {
+    minHeight: '100vh',
+    background: 'linear-gradient(135deg, #0C0712 0%, #201A26 50%, #0C0712 100%)',
+    color: 'white',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  bgGlow1: {
+    position: 'absolute',
+    top: '80px',
+    right: '80px',
+    width: '500px',
+    height: '500px',
+    background: '#5C00CC',
+    opacity: 0.1,
+    filter: 'blur(150px)',
+    borderRadius: '50%',
+    animation: 'float-3d 20s ease-in-out infinite',
+    pointerEvents: 'none',
+  },
+  bgGlow2: {
+    position: 'absolute',
+    bottom: '80px',
+    left: '80px',
+    width: '500px',
+    height: '500px',
+    background: '#6A00EB',
+    opacity: 0.1,
+    filter: 'blur(150px)',
+    borderRadius: '50%',
+    animation: 'float-3d 20s ease-in-out infinite',
+    animationDelay: '-10s',
+    pointerEvents: 'none',
+  },
+  nav: {
+    position: 'relative',
+    zIndex: 50,
+    borderBottom: '1px solid #2A252F',
+    backdropFilter: 'blur(20px)',
+    background: 'rgba(12, 7, 18, 0.8)',
+  },
+  navContent: {
+    maxWidth: '1280px',
+    margin: '0 auto',
+    padding: '20px 24px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  logo: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    cursor: 'pointer',
+  },
+  logoIconWrapper: {
+    position: 'relative',
+  },
+  logoIconGlow: {
+    position: 'absolute',
+    inset: 0,
+    background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
+    filter: 'blur(16px)',
+    opacity: 0.5,
+  },
+  logoIcon: {
+    position: 'relative',
+    width: '48px',
+    height: '48px',
+    background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
+    borderRadius: '12px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logoText: {
+    fontSize: '24px',
+    fontFamily: '"Dela Gothic One", cursive',
+  },
+  logoGradient: {
+    background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    backgroundClip: 'text',
+  },
+  userIcon: {
+    position: 'relative',
+    cursor: 'pointer',
+  },
+  userIconGlow: {
+    position: 'absolute',
+    inset: 0,
+    background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
+    filter: 'blur(12px)',
+    opacity: 0,
+    transition: 'opacity 0.3s ease',
+    borderRadius: '50%',
+  },
+  userIconInner: {
+    position: 'relative',
+    width: '44px',
+    height: '44px',
+    background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  main: {
+    position: 'relative',
+    zIndex: 10,
+    paddingTop: '80px',
+    maxWidth: '1280px',
+    margin: '0 auto',
+    padding: '80px 24px 40px',
+  },
+  header: {
+    marginBottom: '48px',
+  },
+  title: {
+    fontSize: '60px',
+    fontFamily: '"Dela Gothic One", cursive',
+    color: 'white',
+    marginBottom: '12px',
+  },
+  subtitle: {
+    fontSize: '20px',
+    fontFamily: 'Arimo, sans-serif',
+    color: '#A8A5AB',
+  },
+  toolsGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gap: '24px',
+    marginBottom: '64px',
+  },
+  toolCard: {
+    position: 'relative',
+    padding: '32px',
+    background: 'rgba(42, 37, 47, 0.5)',
+    backdropFilter: 'blur(20px)',
+    border: '1px solid rgba(92, 0, 204, 0.2)',
+    borderRadius: '24px',
+    cursor: 'pointer',
+    transition: 'all 0.5s ease',
+  },
+  toolCardBg: {
+    position: 'absolute',
+    inset: 0,
+    background: 'linear-gradient(135deg, rgba(92, 0, 204, 0.1), transparent)',
+    borderRadius: '24px',
+    opacity: 0,
+    transition: 'opacity 0.5s ease',
+  },
+  toolCardContent: {
+    position: 'relative',
+    zIndex: 10,
+  },
+  toolCardTop: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    marginBottom: '20px',
+  },
+  toolIcon: {
+    width: '64px',
+    height: '64px',
+    borderRadius: '16px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'transform 0.3s ease',
+  },
+  toolChevron: {
+    width: '28px',
+    height: '28px',
+    color: '#A8A5AB',
+    transition: 'all 0.3s ease',
+  },
+  toolTitle: {
+    fontSize: '24px',
+    fontFamily: '"Dela Gothic One", cursive',
+    color: 'white',
+    marginBottom: '12px',
+  },
+  toolDesc: {
+    fontFamily: 'Arimo, sans-serif',
+    color: '#A8A5AB',
+  },
+  recentScans: {
+    background: 'rgba(42, 37, 47, 0.5)',
+    backdropFilter: 'blur(20px)',
+    border: '1px solid rgba(92, 0, 204, 0.2)',
+    borderRadius: '24px',
+    padding: '32px',
+  },
+  recentTitle: {
+    fontSize: '24px',
+    fontFamily: '"Dela Gothic One", cursive',
+    color: 'white',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    marginBottom: '32px',
+  },
+  scansList: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
+  },
+  scanCard: {
+    padding: '24px',
+    background: '#201A26',
+    border: '1px solid #2A252F',
+    borderRadius: '16px',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+  },
+  scanCardContent: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  scanCardLeft: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '20px',
+  },
+  scanIconSafe: {
+    width: '48px',
+    height: '48px',
+    background: 'rgba(74, 222, 128, 0.2)',
+    borderRadius: '12px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  scanIconWarning: {
+    width: '48px',
+    height: '48px',
+    background: 'rgba(250, 204, 21, 0.2)',
+    borderRadius: '12px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  scanType: {
+    fontFamily: 'Arimo, sans-serif',
+    fontWeight: 'bold',
+    color: 'white',
+    fontSize: '18px',
+    textTransform: 'capitalize',
+  },
+  scanTime: {
+    fontFamily: 'Arimo, sans-serif',
+    fontSize: '14px',
+    color: '#A8A5AB',
+  },
+  confidenceBadgeSafe: {
+    padding: '8px 20px',
+    borderRadius: '12px',
+    fontFamily: 'Arimo, sans-serif',
+    fontWeight: '600',
+    background: 'rgba(74, 222, 128, 0.2)',
+    color: '#4ade80',
+  },
+  confidenceBadgeWarning: {
+    padding: '8px 20px',
+    borderRadius: '12px',
+    fontFamily: 'Arimo, sans-serif',
+    fontWeight: '600',
+    background: 'rgba(250, 204, 21, 0.2)',
+    color: '#facc15',
+  },
+  modal: {
+    position: 'fixed',
+    inset: 0,
+    background: 'rgba(0, 0, 0, 0.7)',
+    backdropFilter: 'blur(8px)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 50,
+    padding: '16px',
+    animation: 'fade-in 0.3s ease-out',
+  },
+  modalContent: {
+    position: 'relative',
+    background: '#201A26',
+    border: '1px solid rgba(92, 0, 204, 0.3)',
+    borderRadius: '24px',
+    boxShadow: '0 0 60px rgba(106, 0, 235, 0.3)',
+    maxWidth: '768px',
+    width: '100%',
+    maxHeight: '90vh',
+    overflow: 'hidden',
+  },
+  modalHeader: {
+    padding: '32px',
+    borderBottom: '1px solid #2A252F',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  modalTitle: {
+    fontSize: '32px',
+    fontFamily: '"Dela Gothic One", cursive',
+    color: 'white',
+  },
+  closeButton: {
+    width: '40px',
+    height: '40px',
+    borderRadius: '12px',
+    background: '#2A252F',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'background 0.3s ease',
+    border: 'none',
+    cursor: 'pointer',
+  },
+  modalBody: {
+    padding: '32px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '24px',
+  },
+  textarea: {
+    width: '100%',
+    height: '320px',
+    padding: '20px',
+    background: '#0C0712',
+    border: '2px solid #2A252F',
+    borderRadius: '16px',
+    color: 'white',
+    fontFamily: 'monospace',
+    fontSize: '14px',
+    resize: 'none',
+    transition: 'border-color 0.3s ease',
+  },
+  scanButton: {
+    width: '100%',
+    padding: '20px',
+    background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
+    borderRadius: '16px',
+    fontFamily: 'Arimo, sans-serif',
+    fontWeight: 'bold',
+    fontSize: '18px',
+    transition: 'all 0.3s ease',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '12px',
+    color: 'white',
+    border: 'none',
+  },
+  spinner: {
+    width: '24px',
+    height: '24px',
+    border: '3px solid white',
+    borderTopColor: 'transparent',
+    borderRadius: '50%',
+    animation: 'spin 1s linear infinite',
+  },
+  modalNote: {
+    fontSize: '14px',
+    fontFamily: 'Arimo, sans-serif',
+    color: '#A8A5AB',
+    textAlign: 'center',
+  },
+};

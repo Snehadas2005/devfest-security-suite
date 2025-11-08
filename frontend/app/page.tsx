@@ -103,101 +103,26 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0C0712] text-white relative overflow-hidden">
+    <div style={styles.container}>
       <canvas
         ref={canvasRef}
-        className="fixed inset-0 z-0"
-        style={{ opacity: 0.4 }}
+        style={styles.canvas}
       />
 
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Arimo:wght@400;500;600;700&display=swap');
-        
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-
-        body {
-          font-family: 'Arimo', sans-serif;
-          background: #0C0712;
-          color: #ffffff;
-          overflow-x: hidden;
-        }
-
-        .font-dela { 
-          font-family: 'Dela Gothic One', cursive; 
-        }
-        
-        .font-arimo { 
-          font-family: 'Arimo', sans-serif; 
-        }
-        
-        .glow-purple {
-          box-shadow: 0 0 20px rgba(92, 0, 204, 0.5);
-        }
-        
-        .gradient-purple {
-          background: linear-gradient(135deg, #5C00CC 0%, #6A00EB 100%);
-        }
-        
-        .text-gradient {
-          background: linear-gradient(135deg, #5C00CC 0%, #6A00EB 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-
-        .float-animation {
-          animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes pulse-glow {
-          0%, 100% { box-shadow: 0 0 20px rgba(92, 0, 204, 0.5); }
-          50% { box-shadow: 0 0 40px rgba(106, 0, 235, 0.8); }
-        }
-
-        .pulse-glow {
-          animation: pulse-glow 3s ease-in-out infinite;
-        }
-
-        ::-webkit-scrollbar {
-          width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-          background: #0C0712;
-        }
-
-        ::-webkit-scrollbar-thumb {
-          background: linear-gradient(180deg, #5C00CC, #6A00EB);
-          border-radius: 5px;
-        }
-
-        ::selection {
-          background: #5C00CC;
-          color: white;
-        }
-      `}</style>
-
-      <nav className="fixed top-0 w-full z-50 bg-[#0C0712]/80 backdrop-blur-xl border-b border-[#2A252F]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="flex items-center justify-between h-20">
-            <div className="flex items-center gap-3 cursor-pointer" onClick={() => router.push('/')}>
-              <span className="text-xl font-dela">
-                Sentra<span className="text-gradient">Sec</span>
+      <nav style={styles.nav}>
+        <div style={styles.navContent}>
+          <div style={styles.navInner}>
+            <div style={styles.logo} onClick={() => router.push('/')}>
+              <span style={styles.logoText}>
+                Sentra<span style={styles.logoGradient}>Sec</span>
               </span>
             </div>
 
             <button 
               onClick={() => router.push('/dashboard')}
-              className="px-6 py-3 gradient-purple rounded-full font-arimo font-semibold hover:scale-105 transition-transform glow-purple"
+              style={styles.ctaButton}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
               Get Started
             </button>
@@ -205,81 +130,107 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      <main className="relative z-10 pt-32 pb-20 px-6 lg:px-12">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <div className="inline-flex items-center gap-2 px-5 py-2 bg-[#2A252F] border border-[#5C00CC]/30 rounded-full mb-8 float-animation">
-              <Sparkles className="w-4 h-4 text-[#6A00EB]" />
-              <span className="text-sm font-arimo text-[#A8A5AB]">AI-Powered Security Platform</span>
+      <main style={styles.main}>
+        <div style={styles.mainContent}>
+          <div style={styles.hero}>
+            <div style={styles.badge}>
+              <Sparkles style={styles.badgeIcon} />
+              <span style={styles.badgeText}>AI-Powered Security Platform</span>
             </div>
             
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-dela leading-tight mb-8">
-              <span className="block text-white mb-2">Elevate Your</span>
-              <span className="block text-gradient">Cyber Defense</span>
+            <h1 style={styles.title}>
+              <span style={styles.titleLine}>Elevate Your</span>
+              <span style={styles.titleGradient}>Cyber Defense</span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-[#A8A5AB] font-arimo max-w-3xl mx-auto leading-relaxed mb-12">
+            <p style={styles.subtitle}>
               Advanced threat detection powered by Gemini AI. Analyze phishing attempts, 
               code vulnerabilities, and configuration risks with military-grade precision.
             </p>
 
-            <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
+            <div style={styles.buttonGroup}>
               <button 
                 onClick={() => router.push('/dashboard')}
-                className="inline-flex items-center gap-3 px-10 py-5 gradient-purple rounded-2xl text-lg font-arimo font-bold hover:scale-105 transition-all duration-300 glow-purple group"
+                style={styles.primaryButton}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                  e.currentTarget.style.boxShadow = '0 0 50px rgba(106, 0, 235, 0.8)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.boxShadow = '0 0 20px rgba(92, 0, 204, 0.5)';
+                }}
               >
                 Start Scanning
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                <ArrowRight style={{ width: '20px', height: '20px', marginLeft: '8px' }} />
               </button>
               
               <button 
                 onClick={() => router.push('/about')}
-                className="px-10 py-5 bg-[#2A252F] border-2 border-[#5C00CC]/50 rounded-2xl font-arimo font-bold text-lg hover:border-[#6A00EB] hover:bg-[#2A252F]/80 transition-all duration-300"
+                style={styles.secondaryButton}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#6A00EB';
+                  e.currentTarget.style.background = 'rgba(42, 37, 47, 0.8)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(92, 0, 204, 0.5)';
+                  e.currentTarget.style.background = '#2A252F';
+                }}
               >
                 Learn More
               </button>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-20">
+          <div style={styles.featuresGrid}>
             {[
               { 
                 icon: Shield, 
                 title: 'Phishing Detection', 
                 desc: 'AI-powered analysis of suspicious URLs and text',
-                gradient: 'from-[#5C00CC] to-[#6A00EB]'
+                gradient: 'linear-gradient(135deg, #5C00CC, #6A00EB)'
               },
               { 
                 icon: Code, 
                 title: 'Code Scanner', 
                 desc: 'Deep vulnerability analysis across all languages',
-                gradient: 'from-[#6A00EB] to-[#5C00CC]'
+                gradient: 'linear-gradient(135deg, #6A00EB, #5C00CC)'
               },
               { 
                 icon: Lock, 
                 title: 'Config Analyzer', 
                 desc: 'Security risk assessment for configurations',
-                gradient: 'from-[#5C00CC] to-[#6A00EB]'
+                gradient: 'linear-gradient(135deg, #5C00CC, #6A00EB)'
               }
             ].map((feature, i) => (
               <div
                 key={i}
-                className="p-6 bg-gradient-to-br from-[#201A26] to-[#2A252F] rounded-2xl border border-[#2A252F] hover:border-[#6A00EB] transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+                style={styles.featureCard}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#6A00EB';
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.3)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = '#2A252F';
+                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
               >
-                <div className={`w-12 h-12 bg-gradient-to-br ${feature.gradient} rounded-xl flex items-center justify-center mb-4 glow-purple`}>
-                  <feature.icon className="w-6 h-6" />
+                <div style={{...styles.featureIcon, background: feature.gradient}}>
+                  <feature.icon style={{ width: '24px', height: '24px' }} />
                 </div>
-                <h3 className="text-xl font-dela mb-2 text-white">{feature.title}</h3>
-                <p className="text-[#A8A5AB] font-arimo">{feature.desc}</p>
+                <h3 style={styles.featureTitle}>{feature.title}</h3>
+                <p style={styles.featureDesc}>{feature.desc}</p>
               </div>
             ))}
           </div>
 
-          <div className="text-center">
-            <div className="inline-block p-1 bg-gradient-to-r from-[#5C00CC] to-[#6A00EB] rounded-3xl">
-              <div className="bg-[#0C0712] px-12 py-8 rounded-3xl">
-                <p className="text-sm font-arimo text-[#A8A5AB] mb-2">Trusted by Security Teams</p>
-                <p className="text-4xl font-dela text-gradient">99.8% Accuracy</p>
+          <div style={styles.statsContainer}>
+            <div style={styles.statsInner}>
+              <div style={styles.statsCard}>
+                <p style={styles.statsLabel}>Trusted by Security Teams</p>
+                <p style={styles.statsValue}>99.8% Accuracy</p>
               </div>
             </div>
           </div>
@@ -288,3 +239,224 @@ export default function LandingPage() {
     </div>
   );
 }
+
+const styles: { [key: string]: React.CSSProperties } = {
+  container: {
+    minHeight: '100vh',
+    background: '#0C0712',
+    color: 'white',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  canvas: {
+    position: 'fixed',
+    inset: 0,
+    zIndex: 0,
+    opacity: 0.4,
+  },
+  nav: {
+    position: 'fixed',
+    top: 0,
+    width: '100%',
+    zIndex: 50,
+    background: 'rgba(12, 7, 18, 0.8)',
+    backdropFilter: 'blur(20px)',
+    borderBottom: '1px solid #2A252F',
+  },
+  navContent: {
+    maxWidth: '1280px',
+    margin: '0 auto',
+    padding: '0 3rem',
+  },
+  navInner: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: '80px',
+  },
+  logo: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    cursor: 'pointer',
+  },
+  logoText: {
+    fontSize: '24px',
+    fontFamily: '"Dela Gothic One", cursive',
+    fontWeight: 'bold',
+  },
+  logoGradient: {
+    background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    backgroundClip: 'text',
+  },
+  ctaButton: {
+    padding: '12px 24px',
+    background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
+    borderRadius: '9999px',
+    fontFamily: 'Arimo, sans-serif',
+    fontWeight: '600',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 0 20px rgba(92, 0, 204, 0.5)',
+    color: 'white',
+  },
+  main: {
+    position: 'relative',
+    zIndex: 10,
+    paddingTop: '128px',
+    paddingBottom: '80px',
+    padding: '128px 3rem 80px',
+  },
+  mainContent: {
+    maxWidth: '1280px',
+    margin: '0 auto',
+  },
+  hero: {
+    textAlign: 'center',
+    marginBottom: '80px',
+  },
+  badge: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    padding: '8px 20px',
+    background: '#2A252F',
+    border: '1px solid rgba(92, 0, 204, 0.3)',
+    borderRadius: '9999px',
+    marginBottom: '32px',
+    animation: 'float 6s ease-in-out infinite',
+  },
+  badgeIcon: {
+    width: '16px',
+    height: '16px',
+    color: '#6A00EB',
+  },
+  badgeText: {
+    fontSize: '14px',
+    fontFamily: 'Arimo, sans-serif',
+    color: '#A8A5AB',
+  },
+  title: {
+    fontSize: '80px',
+    fontFamily: '"Dela Gothic One", cursive',
+    lineHeight: '1.2',
+    marginBottom: '32px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  titleLine: {
+    color: 'white',
+    marginBottom: '8px',
+  },
+  titleGradient: {
+    background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    backgroundClip: 'text',
+  },
+  subtitle: {
+    fontSize: '24px',
+    color: '#A8A5AB',
+    fontFamily: 'Arimo, sans-serif',
+    maxWidth: '768px',
+    margin: '0 auto 48px',
+    lineHeight: '1.6',
+  },
+  buttonGroup: {
+    display: 'flex',
+    gap: '24px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+  },
+  primaryButton: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '12px',
+    padding: '20px 40px',
+    background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
+    borderRadius: '16px',
+    fontSize: '18px',
+    fontFamily: 'Arimo, sans-serif',
+    fontWeight: 'bold',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 0 20px rgba(92, 0, 204, 0.5)',
+    color: 'white',
+  },
+  secondaryButton: {
+    padding: '20px 40px',
+    background: '#2A252F',
+    border: '2px solid rgba(92, 0, 204, 0.5)',
+    borderRadius: '16px',
+    fontFamily: 'Arimo, sans-serif',
+    fontWeight: 'bold',
+    fontSize: '18px',
+    transition: 'all 0.3s ease',
+    color: 'white',
+  },
+  featuresGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gap: '32px',
+    maxWidth: '1024px',
+    margin: '0 auto 80px',
+  },
+  featureCard: {
+    padding: '24px',
+    background: 'linear-gradient(135deg, rgba(32, 26, 38, 0.8), rgba(42, 37, 47, 0.8))',
+    borderRadius: '16px',
+    border: '1px solid #2A252F',
+    transition: 'all 0.3s ease',
+    cursor: 'pointer',
+  },
+  featureIcon: {
+    width: '48px',
+    height: '48px',
+    borderRadius: '12px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: '16px',
+    boxShadow: '0 0 20px rgba(92, 0, 204, 0.5)',
+  },
+  featureTitle: {
+    fontSize: '24px',
+    fontFamily: '"Dela Gothic One", cursive',
+    marginBottom: '8px',
+    color: 'white',
+  },
+  featureDesc: {
+    color: '#A8A5AB',
+    fontFamily: 'Arimo, sans-serif',
+  },
+  statsContainer: {
+    textAlign: 'center',
+  },
+  statsInner: {
+    display: 'inline-block',
+    padding: '4px',
+    background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
+    borderRadius: '24px',
+  },
+  statsCard: {
+    background: '#0C0712',
+    padding: '32px 48px',
+    borderRadius: '24px',
+  },
+  statsLabel: {
+    fontSize: '14px',
+    fontFamily: 'Arimo, sans-serif',
+    color: '#A8A5AB',
+    marginBottom: '8px',
+  },
+  statsValue: {
+    fontSize: '48px',
+    fontFamily: '"Dela Gothic One", cursive',
+    background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    backgroundClip: 'text',
+  },
+};

@@ -34,136 +34,144 @@ export default function JobResultsPage() {
     }
   ];
 
-  const getSeverityColor = (severity: string) => {
+  const getSeverityGradient = (severity: string) => {
     switch(severity) {
-      case 'critical': return 'from-red-500 to-red-600';
-      case 'high': return 'from-orange-500 to-orange-600';
-      case 'medium': return 'from-yellow-500 to-yellow-600';
-      case 'low': return 'from-blue-500 to-blue-600';
-      default: return 'from-gray-500 to-gray-600';
+      case 'critical': return 'linear-gradient(135deg, #ef4444, #dc2626)';
+      case 'high': return 'linear-gradient(135deg, #f97316, #ea580c)';
+      case 'medium': return 'linear-gradient(135deg, #eab308, #ca8a04)';
+      case 'low': return 'linear-gradient(135deg, #3b82f6, #2563eb)';
+      default: return 'linear-gradient(135deg, #6b7280, #4b5563)';
     }
   };
 
   const getSeverityBg = (severity: string) => {
     switch(severity) {
-      case 'critical': return 'bg-red-500/20 border-red-500/30 text-red-400';
-      case 'high': return 'bg-orange-500/20 border-orange-500/30 text-orange-400';
-      case 'medium': return 'bg-yellow-500/20 border-yellow-500/30 text-yellow-400';
-      case 'low': return 'bg-blue-500/20 border-blue-500/30 text-blue-400';
-      default: return 'bg-gray-500/20 border-gray-500/30 text-gray-400';
+      case 'critical': return { background: 'rgba(239, 68, 68, 0.2)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#f87171' };
+      case 'high': return { background: 'rgba(249, 115, 22, 0.2)', border: '1px solid rgba(249, 115, 22, 0.3)', color: '#fb923c' };
+      case 'medium': return { background: 'rgba(234, 179, 8, 0.2)', border: '1px solid rgba(234, 179, 8, 0.3)', color: '#facc15' };
+      case 'low': return { background: 'rgba(59, 130, 246, 0.2)', border: '1px solid rgba(59, 130, 246, 0.3)', color: '#60a5fa' };
+      default: return { background: 'rgba(107, 114, 128, 0.2)', border: '1px solid rgba(107, 114, 128, 0.3)', color: '#9ca3af' };
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0C0712] via-[#201A26] to-[#0C0712] text-white">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-20 w-[500px] h-[500px] bg-[#5C00CC] opacity-10 blur-[150px] rounded-full"></div>
-        <div className="absolute bottom-20 left-20 w-[500px] h-[500px] bg-[#6A00EB] opacity-10 blur-[150px] rounded-full"></div>
-      </div>
+    <div style={styles.container}>
+      <div style={styles.bgGlow1} />
+      <div style={styles.bgGlow2} />
 
-      <nav className="relative z-50 border-b border-[#2A252F]">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => router.push('/')}>
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-[#5C00CC] to-[#6A00EB] blur-lg opacity-50"></div>
-              <div className="relative w-12 h-12 bg-gradient-to-br from-[#5C00CC] to-[#6A00EB] rounded-xl flex items-center justify-center">
-                <Shield className="w-7 h-7 text-white" />
-              </div>
-            </div>
-            <span className="text-2xl font-['Dela_Gothic_One'] bg-gradient-to-r from-[#5C00CC] to-[#6A00EB] bg-clip-text text-transparent">
-              SentraSec
+      <nav style={styles.nav}>
+        <div style={styles.navContent}>
+          <div style={styles.logo} onClick={() => router.push('/')}>
+            <span style={styles.logoText}>
+              Sentra<span style={styles.logoGradient}>Sec</span>
             </span>
           </div>
           <button 
             onClick={() => router.push('/dashboard')}
-            className="group flex items-center gap-2 px-6 py-3 bg-[#2A252F] border border-[#5C00CC]/30 rounded-xl font-['Arimo'] font-semibold hover:border-[#6A00EB] transition-all"
+            style={styles.backButton}
+            onMouseEnter={(e) => e.currentTarget.style.borderColor = '#6A00EB'}
+            onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(92, 0, 204, 0.3)'}
           >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            <ArrowLeft style={{ width: '16px', height: '16px' }} />
             Back to Dashboard
           </button>
         </div>
       </nav>
 
-      <main className="relative z-10 max-w-6xl mx-auto px-6 py-20">
-        <div className="mb-12">
-          <h1 className="text-5xl font-['Dela_Gothic_One'] text-white mb-3">Scan Results</h1>
-          <p className="text-lg font-['Arimo'] text-[#A8A5AB]">Job ID: #12345 • Code Scanner • Completed 2 hours ago</p>
+      <main style={styles.main}>
+        <div style={styles.header}>
+          <h1 style={styles.title}>Scan Results</h1>
+          <p style={styles.subtitle}>Job ID: #12345 • Code Scanner • Completed 2 hours ago</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <div className="bg-[#2A252F]/50 backdrop-blur-xl border border-[#5C00CC]/20 rounded-2xl p-6">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-gradient-to-br from-[#5C00CC] to-[#6A00EB] rounded-xl flex items-center justify-center">
-                <CheckCircle className="w-7 h-7 text-white" />
+        <div style={styles.statsGrid}>
+          <div style={styles.statCard}>
+            <div style={styles.statIconWrapper}>
+              <div style={styles.statIcon}>
+                <CheckCircle style={{ width: '28px', height: '28px', color: 'white' }} />
               </div>
-              <div>
-                <p className="font-['Arimo'] text-sm text-[#A8A5AB]">Status</p>
-                <p className="font-['Dela_Gothic_One'] text-2xl text-white">Safe</p>
-              </div>
+            </div>
+            <div>
+              <p style={styles.statLabel}>Status</p>
+              <p style={styles.statValue}>Safe</p>
             </div>
           </div>
 
-          <div className="bg-[#2A252F]/50 backdrop-blur-xl border border-[#5C00CC]/20 rounded-2xl p-6">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-gradient-to-br from-[#6A00EB] to-[#5C00CC] rounded-xl flex items-center justify-center">
-                <AlertTriangle className="w-7 h-7 text-white" />
+          <div style={styles.statCard}>
+            <div style={styles.statIconWrapper}>
+              <div style={{...styles.statIcon, background: 'linear-gradient(135deg, #6A00EB, #5C00CC)'}}>
+                <AlertTriangle style={{ width: '28px', height: '28px', color: 'white' }} />
               </div>
-              <div>
-                <p className="font-['Arimo'] text-sm text-[#A8A5AB]">Confidence</p>
-                <p className="font-['Dela_Gothic_One'] text-2xl text-white">87%</p>
-              </div>
+            </div>
+            <div>
+              <p style={styles.statLabel}>Confidence</p>
+              <p style={styles.statValue}>87%</p>
             </div>
           </div>
 
-          <div className="bg-[#2A252F]/50 backdrop-blur-xl border border-[#5C00CC]/20 rounded-2xl p-6">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-gradient-to-br from-[#5C00CC] to-[#6A00EB] rounded-xl flex items-center justify-center">
-                <FileText className="w-7 h-7 text-white" />
+          <div style={styles.statCard}>
+            <div style={styles.statIconWrapper}>
+              <div style={styles.statIcon}>
+                <FileText style={{ width: '28px', height: '28px', color: 'white' }} />
               </div>
-              <div>
-                <p className="font-['Arimo'] text-sm text-[#A8A5AB]">Findings</p>
-                <p className="font-['Dela_Gothic_One'] text-2xl text-white">{mockFindings.length}</p>
-              </div>
+            </div>
+            <div>
+              <p style={styles.statLabel}>Findings</p>
+              <p style={styles.statValue}>{mockFindings.length}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-[#2A252F]/50 backdrop-blur-xl border border-[#5C00CC]/20 rounded-3xl p-8 mb-8">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-['Dela_Gothic_One'] text-white">Detected Issues</h2>
-            <button className="px-6 py-3 bg-gradient-to-r from-[#5C00CC] to-[#6A00EB] rounded-xl font-['Arimo'] font-semibold hover:shadow-[0_0_30px_rgba(106,0,235,0.5)] transition-all flex items-center gap-2">
-              <Download className="w-5 h-5" />
+        <div style={styles.findingsCard}>
+          <div style={styles.findingsHeader}>
+            <h2 style={styles.findingsTitle}>Detected Issues</h2>
+            <button 
+              style={styles.exportButton}
+              onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 30px rgba(106, 0, 235, 0.5)'}
+              onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'none'}
+            >
+              <Download style={{ width: '20px', height: '20px' }} />
               Export Report
             </button>
           </div>
 
-          <div className="space-y-6">
+          <div style={styles.findingsList}>
             {mockFindings.map((finding) => (
               <div
                 key={finding.id}
-                className="group p-6 bg-[#201A26] border border-[#2A252F] rounded-2xl hover:border-[#5C00CC] transition-all duration-300"
+                style={styles.findingCard}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#5C00CC';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = '#2A252F';
+                }}
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-start gap-4 flex-1">
-                    <div className={`w-12 h-12 bg-gradient-to-br ${getSeverityColor(finding.severity)} rounded-xl flex items-center justify-center flex-shrink-0`}>
-                      <XCircle className="w-6 h-6 text-white" />
+                <div style={styles.findingContent}>
+                  <div style={styles.findingLeft}>
+                    <div style={{...styles.findingIcon, background: getSeverityGradient(finding.severity)}}>
+                      <XCircle style={{ width: '24px', height: '24px', color: 'white' }} />
                     </div>
-                    <div className="flex-1">
-                      <h3 className="font-['Arimo'] font-bold text-white text-lg mb-1">{finding.type}</h3>
-                      <p className="font-['Arimo'] text-[#A8A5AB] mb-3">{finding.description}</p>
+                    <div style={styles.findingDetails}>
+                      <h3 style={styles.findingType}>{finding.type}</h3>
+                      <p style={styles.findingDesc}>{finding.description}</p>
                       {finding.location && (
-                        <p className="font-['Arimo'] text-sm text-[#A8A5AB] mb-2">
-                          <span className="text-[#6A00EB]">Location:</span> {finding.location}
+                        <p style={styles.findingLocation}>
+                          <span style={styles.findingLabel}>Location:</span> {finding.location}
                         </p>
                       )}
                       {finding.recommendation && (
-                        <p className="font-['Arimo'] text-sm text-[#A8A5AB]">
-                          <span className="text-[#6A00EB]">Recommendation:</span> {finding.recommendation}
+                        <p style={styles.findingLocation}>
+                          <span style={styles.findingLabel}>Recommendation:</span> {finding.recommendation}
                         </p>
                       )}
                     </div>
                   </div>
-                  <span className={`px-4 py-2 border rounded-xl font-['Arimo'] font-semibold text-sm capitalize ${getSeverityBg(finding.severity)}`}>
+                  <span style={{
+                    ...styles.severityBadge,
+                    ...getSeverityBg(finding.severity),
+                    textTransform: 'capitalize',
+                  }}>
                     {finding.severity}
                   </span>
                 </div>
@@ -172,65 +180,313 @@ export default function JobResultsPage() {
           </div>
         </div>
 
-        <div className="flex gap-4">
+        <div style={styles.actions}>
           <button 
             onClick={() => router.push('/dashboard')}
-            className="flex-1 px-6 py-4 bg-[#2A252F] border border-[#5C00CC]/30 rounded-xl font-['Arimo'] font-semibold hover:border-[#6A00EB] transition-all"
+            style={styles.secondaryButton}
+            onMouseEnter={(e) => e.currentTarget.style.borderColor = '#6A00EB'}
+            onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(92, 0, 204, 0.3)'}
           >
             Run Another Scan
           </button>
-          <button className="flex-1 px-6 py-4 bg-gradient-to-r from-[#5C00CC] to-[#6A00EB] rounded-xl font-['Arimo'] font-semibold hover:shadow-[0_0_30px_rgba(106,0,235,0.5)] transition-all">
+          <button 
+            style={styles.primaryButton}
+            onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 0 30px rgba(106, 0, 235, 0.5)'}
+            onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'none'}
+          >
             Share Results
           </button>
         </div>
       </main>
-
-      <style jsx global>{`
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-        
-        body {
-          background: #0C0712;
-          color: #ffffff;
-          overflow-x: hidden;
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-        }
-
-        ::-webkit-scrollbar {
-          width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-          background: #0C0712;
-        }
-
-        ::-webkit-scrollbar-thumb {
-          background: linear-gradient(180deg, #5C00CC, #6A00EB);
-          border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(180deg, #6A00EB, #5C00CC);
-        }
-
-        ::selection {
-          background: #5C00CC;
-          color: white;
-        }
-
-        button {
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-
-        button:active {
-          transform: scale(0.98);
-        }
-      `}</style>
     </div>
   );
 }
+
+const styles: { [key: string]: React.CSSProperties } = {
+  container: {
+    minHeight: '100vh',
+    background: 'linear-gradient(135deg, #0C0712 0%, #201A26 50%, #0C0712 100%)',
+    color: 'white',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  bgGlow1: {
+    position: 'absolute',
+    top: '80px',
+    right: '80px',
+    width: '500px',
+    height: '500px',
+    background: '#5C00CC',
+    opacity: 0.1,
+    filter: 'blur(150px)',
+    borderRadius: '50%',
+    pointerEvents: 'none',
+  },
+  bgGlow2: {
+    position: 'absolute',
+    bottom: '80px',
+    left: '80px',
+    width: '500px',
+    height: '500px',
+    background: '#6A00EB',
+    opacity: 0.1,
+    filter: 'blur(150px)',
+    borderRadius: '50%',
+    pointerEvents: 'none',
+  },
+  nav: {
+    position: 'relative',
+    zIndex: 50,
+    borderBottom: '1px solid #2A252F',
+  },
+  navContent: {
+    maxWidth: '1280px',
+    margin: '0 auto',
+    padding: '20px 24px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  logo: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    cursor: 'pointer',
+  },
+  logoIconWrapper: {
+    position: 'relative',
+  },
+  logoIconGlow: {
+    position: 'absolute',
+    inset: 0,
+    background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
+    filter: 'blur(16px)',
+    opacity: 0.5,
+  },
+  logoIcon: {
+    position: 'relative',
+    width: '48px',
+    height: '48px',
+    background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
+    borderRadius: '12px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logoText: {
+    fontSize: '24px',
+    fontFamily: '"Dela Gothic One", cursive',
+  },
+  logoGradient: {
+    background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    backgroundClip: 'text',
+  },
+  backButton: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    padding: '12px 24px',
+    background: '#2A252F',
+    border: '1px solid rgba(92, 0, 204, 0.3)',
+    borderRadius: '12px',
+    fontFamily: 'Arimo, sans-serif',
+    fontWeight: '600',
+    transition: 'all 0.3s ease',
+    color: 'white',
+    cursor: 'pointer',
+  },
+  main: {
+    position: 'relative',
+    zIndex: 10,
+    maxWidth: '1152px',
+    margin: '0 auto',
+    padding: '80px 24px',
+  },
+  header: {
+    marginBottom: '48px',
+  },
+  title: {
+    fontSize: '60px',
+    fontFamily: '"Dela Gothic One", cursive',
+    color: 'white',
+    marginBottom: '12px',
+  },
+  subtitle: {
+    fontSize: '20px',
+    fontFamily: 'Arimo, sans-serif',
+    color: '#A8A5AB',
+  },
+  statsGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+    gap: '24px',
+    marginBottom: '48px',
+  },
+  statCard: {
+    background: 'rgba(42, 37, 47, 0.5)',
+    backdropFilter: 'blur(20px)',
+    border: '1px solid rgba(92, 0, 204, 0.2)',
+    borderRadius: '16px',
+    padding: '24px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '16px',
+  },
+  statIconWrapper: {
+    flexShrink: 0,
+  },
+  statIcon: {
+    width: '56px',
+    height: '56px',
+    background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
+    borderRadius: '12px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  statLabel: {
+    fontFamily: 'Arimo, sans-serif',
+    fontSize: '14px',
+    color: '#A8A5AB',
+    marginBottom: '4px',
+  },
+  statValue: {
+    fontFamily: '"Dela Gothic One", cursive',
+    fontSize: '32px',
+    color: 'white',
+  },
+  findingsCard: {
+    background: 'rgba(42, 37, 47, 0.5)',
+    backdropFilter: 'blur(20px)',
+    border: '1px solid rgba(92, 0, 204, 0.2)',
+    borderRadius: '24px',
+    padding: '32px',
+    marginBottom: '32px',
+  },
+  findingsHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: '32px',
+    flexWrap: 'wrap',
+    gap: '16px',
+  },
+  findingsTitle: {
+    fontSize: '36px',
+    fontFamily: '"Dela Gothic One", cursive',
+    color: 'white',
+  },
+  exportButton: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    padding: '12px 24px',
+    background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
+    borderRadius: '12px',
+    fontFamily: 'Arimo, sans-serif',
+    fontWeight: '600',
+    transition: 'all 0.3s ease',
+    color: 'white',
+    border: 'none',
+    cursor: 'pointer',
+  },
+  findingsList: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '24px',
+  },
+  findingCard: {
+    padding: '24px',
+    background: '#201A26',
+    border: '1px solid #2A252F',
+    borderRadius: '16px',
+    transition: 'all 0.3s ease',
+  },
+  findingContent: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    gap: '16px',
+    flexWrap: 'wrap',
+  },
+  findingLeft: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: '16px',
+    flex: 1,
+  },
+  findingIcon: {
+    width: '48px',
+    height: '48px',
+    borderRadius: '12px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+  },
+  findingDetails: {
+    flex: 1,
+  },
+  findingType: {
+    fontFamily: 'Arimo, sans-serif',
+    fontWeight: 'bold',
+    color: 'white',
+    fontSize: '18px',
+    marginBottom: '4px',
+  },
+  findingDesc: {
+    fontFamily: 'Arimo, sans-serif',
+    color: '#A8A5AB',
+    marginBottom: '12px',
+  },
+  findingLocation: {
+    fontFamily: 'Arimo, sans-serif',
+    fontSize: '14px',
+    color: '#A8A5AB',
+    marginBottom: '8px',
+  },
+  findingLabel: {
+    color: '#6A00EB',
+  },
+  severityBadge: {
+    padding: '8px 16px',
+    borderRadius: '12px',
+    fontFamily: 'Arimo, sans-serif',
+    fontWeight: '600',
+    fontSize: '14px',
+    flexShrink: 0,
+  },
+  actions: {
+    display: 'flex',
+    gap: '16px',
+    flexWrap: 'wrap',
+  },
+  secondaryButton: {
+    flex: 1,
+    minWidth: '200px',
+    padding: '16px 24px',
+    background: '#2A252F',
+    border: '1px solid rgba(92, 0, 204, 0.3)',
+    borderRadius: '12px',
+    fontFamily: 'Arimo, sans-serif',
+    fontWeight: '600',
+    transition: 'all 0.3s ease',
+    color: 'white',
+    cursor: 'pointer',
+  },
+  primaryButton: {
+    flex: 1,
+    minWidth: '200px',
+    padding: '16px 24px',
+    background: 'linear-gradient(135deg, #5C00CC, #6A00EB)',
+    borderRadius: '12px',
+    fontFamily: 'Arimo, sans-serif',
+    fontWeight: '600',
+    transition: 'all 0.3s ease',
+    color: 'white',
+    border: 'none',
+    cursor: 'pointer',
+  },
+};
