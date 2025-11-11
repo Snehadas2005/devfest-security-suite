@@ -326,7 +326,8 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 🙏 Acknowledgments
 
-- **DevFest Noida 2025** - For the incredible buildathon opportunity
+- **GDG Noida** - For the incredible buildathon opportunity
+- **GDGoC GU** - For being a constant support
 - **Google Gemini Team** - For providing cutting-edge AI capabilities
 - **Firebase & Supabase** - For robust backend infrastructure
 - **Open Source Community** - For inspiration and support
