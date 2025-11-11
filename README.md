@@ -278,12 +278,12 @@ Content-Type: application/json
 
 | Metric | Value |
 |--------|-------|
-| ⚡ Analysis Speed | 2-3 seconds |
-| 🎯 Accuracy | 99.8% |
-| 💾 Max File Size | 10 MB |
-| 🌐 Languages Supported | 15+ |
-| 🔒 Uptime | 99.9% |
-| 📈 Response Time | <500ms |
+| Analysis Speed | 2-3 seconds |
+| Accuracy | 99.8% |
+| Max File Size | 10 MB |
+| Languages Supported | 15+ |
+| Uptime | 99.9% |
+| Response Time | <500ms |
 
 ---
 
@@ -293,11 +293,11 @@ We welcome contributions from the community! 🎉
 
 ### How to Contribute
 
-1. 🍴 Fork the repository
-2. 🌿 Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. 💾 Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. 📤 Push to the branch (`git push origin feature/AmazingFeature`)
-5. 🔃 Open a Pull Request
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ### Development Guidelines
 
