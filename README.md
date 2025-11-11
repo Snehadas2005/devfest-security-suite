@@ -326,10 +326,10 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 🙏 Acknowledgments
 
-- 🎓 **DevFest Noida 2025** - For the incredible buildathon opportunity
-- 🤖 **Google Gemini Team** - For providing cutting-edge AI capabilities
-- 🔥 **Firebase & Supabase** - For robust backend infrastructure
-- 💜 **Open Source Community** - For inspiration and support
+- **DevFest Noida 2025** - For the incredible buildathon opportunity
+- **Google Gemini Team** - For providing cutting-edge AI capabilities
+- **Firebase & Supabase** - For robust backend infrastructure
+- **Open Source Community** - For inspiration and support
 
 ---
 
@@ -337,11 +337,11 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 If you find SentraSec AI useful, please consider:
 
-- ⭐ **Starring** this repository
-- 🐦 **Sharing** on social media
-- 🐛 **Reporting** bugs and issues
-- 💡 **Suggesting** new features
-- 🤝 **Contributing** to the codebase
+- **Starring** this repository
+- **Sharing** on social media
+- **Reporting** bugs and issues
+- **Suggesting** new features
+- **Contributing** to the codebase
 
 ---
 
