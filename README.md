@@ -16,6 +16,10 @@
 
 ---
 
+##🏆 Achievement
+
+Secured **2nd Runner-Up** position at **Built-A-Thon 2025**, organized by Google Developer Group Noida (GDG Noida) during DevFest 2025 for developing SentraSec AI — an AI-powered cybersecurity platform that democratizes enterprise-grade security for all.
+
 ## What is SentraSec AI?
 
 SentraSec AI is an **AI-powered cybersecurity platform** that democratizes enterprise-grade security analysis for organizations of all sizes. Built during **DevFest Noida 2025 Buildathon**, it leverages **Google's Gemini AI** to deliver military-grade security assessments in **2-3 seconds**.
