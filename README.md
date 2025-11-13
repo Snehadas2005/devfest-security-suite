@@ -330,7 +330,8 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 🙏 Acknowledgments
 
-- **GDG Noida** - For the incredible buildathon opportunity
+- **Sum Of All is 4** - Sana Khan, Kurian Jose, Priyanshu Saini and Sneha Das
+-  **GDG Noida** - For the incredible buildathon opportunity
 - **GDGoC GU** - For being a constant support
 - **Google Gemini Team** - For providing cutting-edge AI capabilities
 - **Firebase & Supabase** - For robust backend infrastructure
